@@ -41,9 +41,6 @@ Avatar-Video-Generation/
 │   ├── styles.css              # Modern styling
 │   └── script.js               # Frontend logic & real-time updates
 │
-├── docs/
-│   └── code_explanation.md     # Detailed code documentation
-│
 ├── .env                        # Environment variables (Git-ignored)
 ├── .env.example                # Example configuration template
 ├── requirements.txt            # Python dependencies
