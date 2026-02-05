@@ -22,21 +22,20 @@ from app.script_generator import ScriptGenerator
 from app.avatar import AvatarVideoGenerator
 from app.config import settings
 
-# Configure logging
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
 
-# Initialize FastAPI app
 app = FastAPI(
     title="AI News Avatar Video Generator",
     description="End-to-end pipeline for generating AI avatar news videos",
     version="1.0.0"
 )
 
-# Add CORS middleware
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
