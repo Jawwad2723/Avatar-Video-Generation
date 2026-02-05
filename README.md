@@ -85,8 +85,6 @@ Avatar-Video-Generation/
    ```env
    OPENAI_API_KEY=your_openai_key_here
    DID_API_KEY=your_did_api_key_here
-   DID_PRESENTER_ID=amy-jcwCkr1grs  # Default avatar
-   DID_VOICE_ID=en-US-JennyNeural   # Default voice
    ```
 
 5. **Run the application**
