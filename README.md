@@ -1,375 +1,389 @@
-# 🎥 AI News Avatar Video Generator
+# 📺 AI News Avatar Video Generator
 
-A production-ready end-to-end pipeline that scrapes recent news articles, summarizes them using AI, generates a professional news anchor script, and creates an AI avatar video with lip-sync.
+An intelligent, end-to-end pipeline for automatically generating professional AI avatar news videos with real-time progress tracking and a modern web interface.
 
-## 📋 Table of Contents
+## 🎯 Features
 
-- [Overview](#overview)
-- [Features](#features)
-- [Architecture](#architecture)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-- [API Documentation](#api-documentation)
-- [Testing](#testing)
-- [Troubleshooting](#troubleshooting)
-- [Project Structure](#project-structure)
-
-## 🎯 Overview
-
-This project automates the entire news video creation process:
-1. **Scrapes** 5 recent news articles from reputable sources
-2. **Summarizes** each article using OpenAI's GPT models
-3. **Generates** a professional news anchor script (30-45 seconds)
-4. **Creates** an AI avatar video with realistic lip-sync using D-ID
-5. **Exposes** everything through a FastAPI REST endpoint
-
-## ✨ Features
-
-- ✅ Automated news scraping from multiple sources (BBC, Reuters, AP News, etc.)
-- ✅ AI-powered article summarization (OpenAI GPT-4)
-- ✅ Professional news script generation
-- ✅ High-quality AI avatar videos with lip-sync (D-ID)
-- ✅ RESTful API with FastAPI
-- ✅ Comprehensive error handling and logging
-- ✅ Production-ready code structure
-- ✅ Easy configuration via environment variables
+- **Automated News Scraping**: Collects the latest news articles from 29 international news sources
+- **AI-Powered Summarization**: Uses GPT-4 to create concise, professional summaries
+- **Dynamic Script Generation**: Generates natural-sounding news anchor scripts from summaries
+- **Avatar Video Creation**: Produces lip-synced avatar videos using D-ID's cutting-edge technology
+- **Real-Time Progress Tracking**: Stream-based UI updates showing each pipeline step
+- **Professional Web Interface**: Modern, responsive dashboard for easy interaction
+- **Video Download**: Direct video downloads to your system after generation
 
 ## 🏗️ Architecture
 
+The application follows a modular, pipeline-based architecture:
+
 ```
-┌─────────────────┐
-│   User Request  │
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────────────────────────┐
-│      FastAPI Application            │
-│  POST /generate-news-video          │
-└────────┬───────────────────────────┘
-         │
-         ▼
-┌─────────────────────────────────────┐
-│  Step 1: News Scraper               │
-│  - Scrapes 5 articles               │
-│  - Extracts title, content, URL     │
-└────────┬────────────────────────────┘
-         │
-         ▼
-┌─────────────────────────────────────┐
-│  Step 2: LLM Summarizer             │
-│  - OpenAI GPT API                   │
-│  - 3-4 sentence summaries           │
-└────────┬────────────────────────────┘
-         │
-         ▼
-┌─────────────────────────────────────┐
-│  Step 3: Script Generator           │
-│  - Combines summaries               │
-│  - News anchor format               │
-│  - 30-45 second script              │
-└────────┬────────────────────────────┘
-         │
-         ▼
-┌─────────────────────────────────────┐
-│  Step 4: Avatar Video Generator     │
-│  - D-ID API                         │
-│  - High-quality lip-sync            │
-│  - 720p+ resolution                 │
-└────────┬────────────────────────────┘
-         │
-         ▼
-┌─────────────────────────────────────┐
-│  Response                           │
-│  - Video URL                        │
-│  - Script text                      │
-│  - Article list                     │
-└─────────────────────────────────────┘
+News Scraping → Summarization → Script Generation → Avatar Video Creation
+     ↓              ↓                   ↓                    ↓
+  BeautifulSoup   OpenAI GPT-4      Template             D-ID API
+                                     Engine             (Lip-Sync)
 ```
 
-## 📦 Prerequisites
+## 📋 Project Structure
 
-- **Python**: 3.10 or higher
-- **OpenAI API Key**: [Get one here](https://platform.openai.com/api-keys)
-- **D-ID API Key**: [Sign up here](https://www.d-id.com/)
+```
+Avatar-Video-Generation/
+│
+├── app/
+│   ├── main.py                 # FastAPI application & routing
+│   ├── scraper.py              # News article scraping module
+│   ├── summarizer.py           # LLM-based summarization module
+│   ├── script_generator.py     # News script generation
+│   ├── avatar.py               # D-ID API integration
+│   └── config.py               # Configuration & environment settings
+│
+├── static/
+│   ├── index.html              # Web UI (responsive dashboard)
+│   ├── styles.css              # Modern styling
+│   └── script.js               # Frontend logic & real-time updates
+│
+├── docs/
+│   └── code_explanation.md     # Detailed code documentation
+│
+├── .env                        # Environment variables (Git-ignored)
+├── .env.example                # Example configuration template
+├── requirements.txt            # Python dependencies
+├── README.md                   # This file
+└── run.sh                      # Startup script
+```
 
-## 🚀 Installation
+## 🚀 Quick Start
 
-### Step 1: Clone the Repository
+### Prerequisites
 
+- Python 3.8+
+- pip (Python package manager)
+- Required API Keys:
+  - **OpenAI API Key** (for GPT-4o-mini summarization)
+  - **D-ID API Key** (for avatar video generation)
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   cd Avatar-Video-Generation
+   ```
+
+2. **Create virtual environment**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Configure environment variables**
+   ```bash
+   cp .env.example .env
+   ```
+   
+   Edit `.env` and add your API keys:
+   ```env
+   OPENAI_API_KEY=your_openai_key_here
+   DID_API_KEY=your_did_api_key_here
+   DID_PRESENTER_ID=amy-jcwCkr1grs  # Default avatar
+   DID_VOICE_ID=en-US-JennyNeural   # Default voice
+   ```
+
+5. **Run the application**
+   ```bash
+   python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+   ```
+   
+   Or use the provided script:
+   ```bash
+   bash run.sh
+   ```
+
+6. **Access the UI**
+   Open your browser and navigate to: **http://localhost:8000**
+
+## 📖 Usage Guide
+
+### Via Web Interface (Recommended)
+
+1. **Open Dashboard**: Navigate to http://localhost:8000
+2. **Click "Generate News Video"**: Start the pipeline
+3. **Monitor Progress**: Watch real-time logs showing each stage
+4. **Review Results**: See generated script and preview video
+5. **Download**: Click download button to save the video
+
+### Via API (cURL/Postman)
+
+**Stream with Progress Updates:**
 ```bash
-git clone <repository-url>
-cd news-avatar-pipeline
+curl http://localhost:8000/generate-news-video-stream
 ```
 
-### Step 2: Create Virtual Environment
-
+**Health Check:**
 ```bash
-# Create virtual environment
-python -m venv venv
-
-# Activate virtual environment
-# On Windows:
-venv\Scripts\activate
-# On macOS/Linux:
-source venv/bin/activate
-```
-
-### Step 3: Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-## ⚙️ Configuration
-
-### Step 1: Set Up Environment Variables
-
-1. Copy the example environment file:
-```bash
-cp .env.example .env
-```
-
-2. Edit `.env` and add your API keys:
-```bash
-# OpenAI API Key
-OPENAI_API_KEY=sk-proj-your-actual-key-here
-
-# D-ID API Key
-DID_API_KEY=your-actual-did-key-here
-```
-
-### Step 2: Get Your API Keys
-
-#### OpenAI API Key
-1. Go to [OpenAI Platform](https://platform.openai.com/api-keys)
-2. Sign up or log in
-3. Click "Create new secret key"
-4. Copy the key and paste it in `.env`
-
-#### D-ID API Key
-1. Go to [D-ID Studio](https://studio.d-id.com/)
-2. Sign up for a free account
-3. Go to Account Settings → API Key
-4. Copy the key and paste it in `.env`
-
-**Note**: D-ID offers a free tier with limited credits. You may need to add payment info for production use.
-
-## 🎬 Usage
-
-### Start the Server
-
-#### Option 1: Using the run script
-```bash
-chmod +x run.sh
-./run.sh
-```
-
-#### Option 2: Using uvicorn directly
-```bash
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-```
-
-The server will start at `http://localhost:8000`
-
-### Access the API
-
-#### Interactive Documentation (Swagger UI)
-Open your browser and navigate to:
-```
-http://localhost:8000/docs
-```
-
-#### Alternative Documentation (ReDoc)
-```
-http://localhost:8000/redoc
-```
-
-### Make an API Request
-
-#### Using cURL
-```bash
-curl -X POST "http://localhost:8000/generate-news-video" \
-  -H "Content-Type: application/json"
-```
-
-#### Using Python
-```python
-import requests
-
-response = requests.post("http://localhost:8000/generate-news-video")
-data = response.json()
-
-print(f"Status: {data['status']}")
-print(f"Video URL: {data['video_url']}")
-print(f"Script: {data['script']}")
-```
-
-#### Using the Swagger UI
-1. Go to `http://localhost:8000/docs`
-2. Click on `POST /generate-news-video`
-3. Click "Try it out"
-4. Click "Execute"
-5. View the response with video URL and script
-
-### Example Response
-
-```json
-{
-  "status": "success",
-  "script": "Good day. Here are today's top stories for February 05, 2026.\n\nIn our lead story, researchers have discovered a new treatment for Alzheimer's disease that shows promising results in early trials...\n\nNext, global markets responded positively to the Federal Reserve's decision to maintain interest rates...\n\nIn other news, a major technology company announced plans to invest $10 billion in renewable energy infrastructure...\n\nMeanwhile, international climate talks in Geneva reached a breakthrough agreement on carbon emissions...\n\nAnd finally, the World Health Organization reported significant progress in malaria prevention programs across Africa...\n\nThat's all for now. Stay informed and have a great day.",
-  "video_url": "https://d-id-talks-prod.s3.us-west-2.amazonaws.com/...",
-  "articles": [
-    {
-      "title": "Breakthrough in Alzheimer's Research",
-      "url": "https://www.bbc.com/news/health-...",
-      "summary": "Researchers have discovered a new treatment..."
-    },
-    ...
-  ],
-  "generated_at": "2026-02-05T10:30:45.123456"
-}
-```
-
-## 📚 API Documentation
-
-### Endpoints
-
-#### `GET /`
-Health check and API information
-- **Response**: Basic API information and available endpoints
-
-#### `GET /health`
-Server health status
-- **Response**: Health status and timestamp
-
-#### `POST /generate-news-video`
-Generate news avatar video
-- **Response**: Complete video generation result
-- **Processing Time**: 2-5 minutes (includes video rendering)
-
-#### `GET /test-components`
-Test API configuration
-- **Response**: Configuration status of all components
-
-### Response Fields
-
-| Field | Type | Description |
-|-------|------|-------------|
-| status | string | "success" or "error" |
-| script | string | Generated news anchor script |
-| video_url | string | URL to download/view the video |
-| articles | array | List of articles with summaries |
-| generated_at | string | ISO timestamp of generation |
-
-## 🧪 Testing
-
-### Test Individual Components
-
-```bash
-# Test configuration
-curl http://localhost:8000/test-components
-
-# Test health
 curl http://localhost:8000/health
 ```
 
-### Test Full Pipeline
+## 🔄 Pipeline Stages
 
-```bash
-# Generate a complete news video
-curl -X POST http://localhost:8000/generate-news-video
+### 1. **News Scraping** (~10-20 seconds)
+- Connects to 29 international news sources
+- Extracts article titles, URLs, and content
+- Uses fallback sources for reliability
+- Returns 5 recent articles
+
+**Output**: List of articles with metadata
+
+### 2. **Summarization** (~20-30 seconds)
+- Processes each article with GPT-4o-mini
+- Generates concise, professional summaries
+- Maintains key information and context
+- Target: 150-160 words per summary
+
+**Output**: Summarized articles list
+
+### 3. **Script Generation** (<1 second)
+- Combines summaries into a cohesive script
+- Formats as professional news anchor delivery
+- Estimates reading time
+- Average: ~130 words, ~50 seconds
+
+**Output**: Complete news anchor script
+
+### 4. **Avatar Video Creation** (~20-30 seconds)
+- Sends script to D-ID API
+- Generates lip-synced avatar video
+- Creates professional news presentation
+- Polls for completion status
+- Max wait: 5 minutes (300 seconds)
+
+**Output**: Direct video URL (MP4, playable/downloadable)
+
+## ⚙️ Configuration
+
+### Environment Variables
+
+```env
+# OpenAI Configuration
+OPENAI_API_KEY=sk-...                    # Your OpenAI API key
+OPENAI_MODEL=gpt-4o-mini                 # Model for summarization
+
+# D-ID Configuration (Avatar)
+DID_API_KEY=<your-api-key>               # Your D-ID API key
+DID_PRESENTER_ID=amy-jcwCkr1grs         # Avatar character ID
+DID_VOICE_ID=en-US-JennyNeural          # Voice synthesis model
+
+# Optional Settings
+DEBUG=false                               # Enable debug logging
 ```
 
-### Expected Processing Time
-- **Scraping**: 10-30 seconds
-- **Summarization**: 20-40 seconds
-- **Script Generation**: 1-2 seconds
-- **Video Generation**: 60-180 seconds
-- **Total**: 2-5 minutes
+### API Keys
 
-## 🔧 Troubleshooting
+**OpenAI**:
+- Go to: https://platform.openai.com/account/api-keys
+- Create a new secret key
+- Uses GPT-4o-mini model (~$0.15 per 1M tokens)
 
-### Common Issues
+**D-ID**:
+- Go to: https://www.d-id.com
+- Create account and get API key
+- Free tier: 10 credits/month (~1-2 videos)
+- Professional: Pay-as-you-go pricing
 
-#### 1. "OpenAI authentication failed"
-**Solution**: Check that your `OPENAI_API_KEY` in `.env` is correct and has available credits.
+## 📊 Monitoring & Logging
 
-#### 2. "D-ID authentication failed"
-**Solution**: Verify your `DID_API_KEY` in `.env` and ensure you have D-ID credits.
+### Real-Time Progress Display
+- **Logs Panel**: Shows all system activities with timestamps
+- **Progress Bar**: Visual indicator of completion percentage
+- **Status Messages**: Color-coded log entries (info/success/error)
 
-#### 3. "Failed to scrape articles"
+### Log Levels
+```
+INFO:     Standard operations (blue)
+SUCCESS:  Completed steps (green)
+ERROR:    Failures & exceptions (red)
+WARNING:  Skipped items (orange)
+```
+
+### Example Log Output
+```
+[14:30:00] Connecting to generation service...
+[14:30:01] Step 1: Scraping news articles from multiple sources...
+[14:30:15] Found 10 potential article links from https://www.bbc.com/news
+[14:30:20] ✓ Successfully scraped 5 articles
+[14:30:21] Step 2: Summarizing articles with AI...
+[14:30:50] ✓ Successfully summarized 5 articles
+[14:30:51] Step 3: Generating professional news script...
+[14:30:52] ✓ Generated script with 132 words
+[14:30:53] Step 4: Creating avatar video (this may take a moment)...
+[14:31:10] ✓ Avatar video generated successfully!
+```
+
+## 🔧 API Reference
+
+### Endpoints
+
+#### GET `/`
+Returns UI or health status
+```json
+{
+  "status": "healthy",
+  "timestamp": "2026-02-05T06:30:00"
+}
+```
+
+#### GET `/generate-news-video-stream`
+Server-Sent Events stream with real-time progress
+- **Content-Type**: text/event-stream
+- **Returns**: Stream of JSON objects with logs and progress
+- **Format**: 
+  ```json
+  {
+    "type": "log",
+    "message": "Log message",
+    "progress": 45
+  }
+  ```
+
+#### GET `/health`
+Simple health check
+```json
+{
+  "status": "healthy",
+  "timestamp": "2026-02-05T06:30:00"
+}
+```
+
+## 🐛 Troubleshooting
+
+### Video Generation Fails
+**Issue**: D-ID API returns error  
 **Solution**: 
-- Check your internet connection
-- Some news sites may block scraping; the system will try multiple sources
-- Verify that `requests` and `beautifulsoup4` are installed
+- Check API key and credentials
+- Verify account has available credits
+- Check internet connection
 
-#### 4. "Module not found" errors
-**Solution**: Ensure you've activated the virtual environment and installed all requirements:
+### Articles Won't Scrape
+**Issue**: Scraping times out or returns no results  
+**Solution**: 
+- Verify internet connection
+- Some sources may be temporarily blocked
+- System tries 29 sources, at least one should work
+
+### Summarization Errors
+**Issue**: OpenAI API errors  
+**Solution**: 
+- Verify OpenAI API key
+- Ensure account has API credits
+- Check OpenAI account status
+
+### Port Already in Use
+**Solution**:
 ```bash
-source venv/bin/activate  # or venv\Scripts\activate on Windows
-pip install -r requirements.txt
+# Use different port
+python -m uvicorn app.main:app --port 8001
 ```
 
-#### 5. Video generation timeout
-**Solution**: D-ID can take 2-3 minutes to generate videos. The default timeout is 5 minutes. If it times out, check D-ID's status page.
-
-### Debug Mode
-
-Enable debug logging by setting in `.env`:
+### Module Not Found
+**Solution**:
 ```bash
-DEBUG=True
+# Reinstall dependencies
+pip install -r requirements.txt --force-reinstall
 ```
 
-Then restart the server to see detailed logs.
+## 📈 Performance Metrics
 
-### Check Logs
-
-All operations are logged. Check the console output for detailed information about each step.
-
-## 📁 Project Structure
-
-```
-news-avatar-pipeline/
-│
-├── app/
-│   ├── __init__.py           # Package initialization
-│   ├── main.py               # FastAPI application & endpoints
-│   ├── config.py             # Configuration & environment variables
-│   ├── scraper.py            # News scraping logic
-│   ├── summarizer.py         # LLM summarization
-│   ├── script_generator.py   # Script generation
-│   └── avatar.py             # D-ID video generation
-│
-├── docs/
-│   └── code_explanation.md   # Line-by-line code explanation
-│
-├── .env.example              # Example environment variables
-├── .env                      # Your actual environment variables (create this)
-├── requirements.txt          # Python dependencies
-├── README.md                 # This file
-└── run.sh                    # Startup script
-```
+| Stage | Typical Time | Range |
+|-------|--------------|-------|
+| Scraping | 15-20s | 10-30s |
+| Summarization | 20-25s | 15-40s |
+| Script Generation | <1s | <1s |
+| Video Creation | 25-30s | 20-40s |
+| **Total** | **60-75s** | **45-110s** |
 
 ## 🔐 Security Notes
 
-- Never commit your `.env` file to version control
-- Keep your API keys private
-- Use environment variables for all sensitive data
-- The `.env.example` file shows required variables without actual keys
+- **Never commit `.env` file** (contains API keys)
+- Use environment variables for sensitive data
+- API keys are logged only in debug mode
+- Videos are temporarily stored on D-ID servers
+- All communications use HTTPS with D-ID API
+- `.env` is in `.gitignore` for your protection
+
+## 🎓 Code Structure
+
+### Key Modules
+
+**app/scraper.py**
+- `NewsScraper`: Handles multi-source article collection
+- Implements fallback logic for robustness
+- Parses HTML with BeautifulSoup
+- Extracts article content with newspaper3k
+
+**app/summarizer.py**
+- `NewsSummarizer`: GPT-4 powered summarization
+- Maintains professional tone
+- Handles errors gracefully
+- Configured for fast responses
+
+**app/script_generator.py**
+- `ScriptGenerator`: Combines summaries into coherent script
+- Formats for natural speech
+- Estimates reading time
+- Professional news anchor style
+
+**app/avatar.py**
+- `AvatarVideoGenerator`: D-ID API integration
+- Handles video polling and status
+- Manages free-tier limitations
+- Implements retry logic
+
+**app/config.py**
+- `Settings`: Pydantic-based configuration
+- Loads from .env file
+- Provides type-safe access to settings
+- Includes comprehensive news sources
+
+**app/main.py**
+- FastAPI application setup
+- Route definitions
+- Real-time streaming with Server-Sent Events
+- Error handling middleware
 
 ## 📝 License
 
-This project is for educational and demonstration purposes.
+This project is provided as-is for educational and commercial use.
 
-## 🤝 Support
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit pull requests or open issues for bugs and feature requests.
+
+## ✨ Future Enhancements
+
+- [ ] Multiple avatar options
+- [ ] Custom voice selection
+- [ ] Scheduled video generation
+- [ ] Video storage & history
+- [ ] Multi-language support
+- [ ] Advanced script editing before generation
+- [ ] Email notifications upon completion
+- [ ] Batch video generation
+- [ ] Analytics dashboard
+
+## 📞 Support
 
 For issues or questions:
-1. Check the [Troubleshooting](#troubleshooting) section
-2. Review the [code_explanation.md](docs/code_explanation.md) for detailed code walkthrough
-3. Check API documentation at `/docs` when server is running
+1. Check the Troubleshooting section
+2. Review API documentation
+3. Check log files for detailed error messages
+4. Verify all API keys are correctly configured
 
+---
+
+**Happy Generating! 🎬**
 ## 🎓 Learning Resources
 
 - [FastAPI Documentation](https://fastapi.tiangolo.com/)

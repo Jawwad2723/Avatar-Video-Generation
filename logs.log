@@ -1,0 +1,55 @@
+INFO:     127.0.0.1:39856 - "GET /docs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39856 - "GET /openapi.json HTTP/1.1" 200 OK
+2026-02-05 06:29:00,870 - app.main - INFO - Starting news video generation pipeline
+2026-02-05 06:29:00,870 - app.main - INFO - Step 1: Scraping news articles...
+2026-02-05 06:29:00,871 - app.scraper - INFO - Starting to scrape 5 articles
+2026-02-05 06:29:00,871 - app.scraper - INFO - Trying source 1/29: https://www.bbc.com/news
+2026-02-05 06:29:02,824 - app.scraper - INFO - Found 10 potential article links from https://www.bbc.com/news
+2026-02-05 06:29:22,891 - app.scraper - INFO - Scraped: Latest News & Updates...
+2026-02-05 06:29:24,410 - app.scraper - INFO - Scraped: Latest News & Updates...
+2026-02-05 06:29:27,520 - app.scraper - INFO - Trying source 2/29: https://apnews.com
+2026-02-05 06:29:31,987 - app.scraper - INFO - Found 10 potential article links from https://apnews.com
+2026-02-05 06:29:33,727 - app.scraper - INFO - Scraped: Associated Press News: Breaking News, Latest Headlines and V...
+2026-02-05 06:29:36,406 - app.scraper - INFO - Scraped: World News...
+2026-02-05 06:29:40,793 - app.scraper - INFO - Scraped: Israel-Hamas war | Breaking News & Live Updates...
+2026-02-05 06:29:41,296 - app.scraper - INFO - Successfully scraped 5 articles from 2 sources
+2026-02-05 06:29:41,296 - app.main - INFO - Successfully scraped 5 articles
+2026-02-05 06:29:41,297 - app.main - INFO - Step 2: Summarizing articles with LLM...
+2026-02-05 06:29:41,331 - app.summarizer - INFO - Initialized NewsSummarizer with model: gpt-4o-mini
+2026-02-05 06:29:41,331 - app.summarizer - INFO - Summarizing article: Latest News & Updates...
+2026-02-05 06:29:49,366 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-05 06:29:49,387 - app.summarizer - INFO - Successfully generated summary (150 chars)
+2026-02-05 06:29:49,387 - app.summarizer - INFO - Summarizing article: Latest News & Updates...
+2026-02-05 06:29:50,908 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-05 06:29:50,932 - app.summarizer - INFO - Successfully generated summary (141 chars)
+2026-02-05 06:29:50,932 - app.summarizer - INFO - Summarizing article: Associated Press News: Breaking News, Latest Headlines and V...
+2026-02-05 06:29:52,218 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-05 06:29:52,224 - app.summarizer - INFO - Successfully generated summary (148 chars)
+2026-02-05 06:29:52,224 - app.summarizer - INFO - Summarizing article: World News...
+2026-02-05 06:29:54,427 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-05 06:29:54,464 - app.summarizer - INFO - Successfully generated summary (156 chars)
+2026-02-05 06:29:54,464 - app.summarizer - INFO - Summarizing article: Israel-Hamas war | Breaking News & Live Updates...
+2026-02-05 06:29:56,035 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-05 06:29:56,057 - app.summarizer - INFO - Successfully generated summary (150 chars)
+2026-02-05 06:29:56,057 - app.main - INFO - Successfully summarized 5 articles
+2026-02-05 06:29:56,057 - app.main - INFO - Step 3: Generating news anchor script...
+2026-02-05 06:29:56,057 - app.script_generator - INFO - Initialized ScriptGenerator
+2026-02-05 06:29:56,057 - app.script_generator - INFO - Generating script from 5 articles
+2026-02-05 06:29:56,058 - app.script_generator - INFO - Generated script: 132 words, ~53 seconds
+2026-02-05 06:29:56,058 - app.main - INFO - Successfully generated script
+2026-02-05 06:29:56,058 - app.main - INFO - Step 4: Generating avatar video...
+2026-02-05 06:29:56,058 - app.avatar - INFO - Initialized AvatarVideoGenerator with D-ID
+2026-02-05 06:29:56,058 - app.avatar - INFO - Starting video generation with D-ID
+2026-02-05 06:29:56,058 - app.avatar - INFO - Creating talk with D-ID API (Free Tier)
+2026-02-05 06:29:56,058 - app.avatar - INFO - Script length: 831 characters
+2026-02-05 06:30:04,220 - app.avatar - INFO - D-ID Response Status: 201
+2026-02-05 06:30:04,220 - app.avatar - INFO - Talk created successfully. ID: tlk_o0ZFRI7m-EZ7uI66UFkgo
+2026-02-05 06:30:04,222 - app.avatar - INFO - Waiting for video generation (max 300s)
+2026-02-05 06:30:08,973 - app.avatar - INFO - Video status: started (elapsed: 0s)
+2026-02-05 06:30:15,814 - app.avatar - INFO - Video status: started (elapsed: 10s)
+2026-02-05 06:30:23,013 - app.avatar - INFO - Video status: done (elapsed: 17s)
+2026-02-05 06:30:23,014 - app.avatar - INFO - Video generated successfully: https://d-id-talks-prod.s3.us-west-2.amazonaws.com/auth0%7C6983e92ec5f77a8e90477a25/tlk_o0ZFRI7m-EZ7uI66UFkgo/1770255004012.mp4?AWSAccessKeyId=AKIA5CUMPJBIK65W6FGA&Expires=1770341422&Signature=Mn5ibZdks44ao%2F0W1EK%2BTSEauLQ%3D
+2026-02-05 06:30:23,015 - app.main - INFO - Successfully generated video: https://d-id-talks-prod.s3.us-west-2.amazonaws.com/auth0%7C6983e92ec5f77a8e90477a25/tlk_o0ZFRI7m-EZ7uI66UFkgo/1770255004012.mp4?AWSAccessKeyId=AKIA5CUMPJBIK65W6FGA&Expires=1770341422&Signature=Mn5ibZdks44ao%2F0W1EK%2BTSEauLQ%3D
+2026-02-05 06:30:23,016 - app.main - INFO - Pipeline completed successfully
+INFO:     127.0.0.1:39856 - "POST /generate-news-video HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'app/__init__.py'. Reloading...

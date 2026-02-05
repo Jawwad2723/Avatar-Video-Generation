@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI News Avatar Video Generator</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>📺 AI News Avatar Generator</h1>
+                <p class="subtitle">Generate AI-powered news videos with avatar and voice</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Initial State -->
+            <div id="initialState" class="state-container active">
+                <div class="card">
+                    <h2>Generate Your News Video</h2>
+                    <p class="description">
+                        This tool will scrape the latest news, create a professional script, 
+                        and generate an AI avatar news video in minutes.
+                    </p>
+                    
+                    <div class="features">
+                        <div class="feature">
+                            <span class="feature-icon">📰</span>
+                            <p>Scrapes latest news articles</p>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">🤖</span>
+                            <p>Generates professional script</p>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">🎬</span>
+                            <p>Creates avatar video</p>
+                        </div>
+                    </div>
+                    
+                    <button id="generateBtn" class="btn btn-primary btn-large" onclick="startGeneration()">
+                        <span class="btn-icon">🚀</span> Generate News Video
+                    </button>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loadingState" class="state-container">
+                <div class="card">
+                    <h2>Generating Your Video...</h2>
+                    
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div id="progressFill" class="progress-fill"></div>
+                        </div>
+                        <p id="progressText" class="progress-text">Initializing...</p>
+                    </div>
+
+                    <!-- Logs Display -->
+                    <div class="logs-container">
+                        <h3>Process Logs</h3>
+                        <div id="logsList" class="logs-list">
+                            <p class="log-item log-info">Connecting to generation service...</p>
+                        </div>
+                    </div>
+
+                    <!-- Cancel Button -->
+                    <button id="cancelBtn" class="btn btn-secondary" onclick="cancelGeneration()">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+
+            <!-- Success State -->
+            <div id="successState" class="state-container">
+                <div class="card success-card">
+                    <div class="success-icon">✅</div>
+                    <h2>Video Generated Successfully!</h2>
+                    
+                    <div class="success-details">
+                        <div class="detail-item">
+                            <label>Generation Time:</label>
+                            <span id="genTime">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Script Summary:</label>
+                            <span id="scriptSummary">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Articles Used:</label>
+                            <span id="articlesCount">-</span>
+                        </div>
+                    </div>
+
+                    <!-- Video Preview -->
+                    <div class="video-preview">
+                        <h3>Your Video</h3>
+                        <video id="videoPlayer" controls width="100%">
+                            <source id="videoSource" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <button id="downloadBtn" class="btn btn-primary" onclick="downloadVideo()">
+                            <span class="btn-icon">⬇️</span> Download Video
+                        </button>
+                        <button class="btn btn-secondary" onclick="resetForm()">
+                            <span class="btn-icon">🔄</span> Generate Another
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error State -->
+            <div id="errorState" class="state-container">
+                <div class="card error-card">
+                    <div class="error-icon">❌</div>
+                    <h2>Generation Failed</h2>
+                    <p id="errorMessage" class="error-message">An error occurred during video generation.</p>
+                    
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="resetForm()">
+                            <span class="btn-icon">🔄</span> Try Again
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2026 AI News Avatar Generator. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

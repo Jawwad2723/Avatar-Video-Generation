@@ -6,6 +6,7 @@ pydantic-settings==2.1.0
 
 # HTTP Requests
 requests==2.31.0
+httpx>=0.26.0
 
 # Web Scraping
 beautifulsoup4==4.12.3
@@ -20,3 +21,4 @@ python-dotenv==1.0.1
 
 # Utilities
 python-multipart==0.0.9
+aiofiles==23.2.1
