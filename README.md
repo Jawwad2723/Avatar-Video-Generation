@@ -541,8 +541,6 @@ For issues or questions:
 - [FastAPI Documentation](https://fastapi.tiangolo.com/)
 - [OpenAI API Reference](https://platform.openai.com/docs/api-reference)
 - [D-ID API Documentation](https://docs.d-id.com/)
-- [BeautifulSoup Documentation](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
-
 ---
 
 **Built with ❤️ using FastAPI, OpenAI, and D-ID**
