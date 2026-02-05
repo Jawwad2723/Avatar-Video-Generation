@@ -339,7 +339,7 @@ INFO:     127.0.0.1:51436 - "GET /generate-news-video-stream HTTP/1.1" 200 OK
 ### Working Example Video
 This is a complete working example of the generated avatar news video:
 
-**[WorkingVideo.mp4](./WorkingVideo.mp4)** - Click to download or view
+**[WorkingVideo.mp4 (Google Drive Link)](https://drive.google.com/file/d/16uDnTch7r0o5iOFyFmCKrwemSrVWTkFs/view?usp=sharing)** - Click to view or download
 
 ### Generated News Avatar Videos
 
