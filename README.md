@@ -168,8 +168,6 @@ OPENAI_MODEL=gpt-4o-mini                 # Model for summarization
 
 # D-ID Configuration (Avatar)
 DID_API_KEY=<your-api-key>               # Your D-ID API key
-DID_PRESENTER_ID=amy-jcwCkr1grs         # Avatar character ID
-DID_VOICE_ID=en-US-JennyNeural          # Voice synthesis model
 
 # Optional Settings
 DEBUG=false                               # Enable debug logging
