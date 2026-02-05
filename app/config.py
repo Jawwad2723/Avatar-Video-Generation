@@ -28,13 +28,48 @@ class Settings(BaseSettings):
     DID_PRESENTER_ID: str = os.getenv("DID_PRESENTER_ID", "amy-jcwCkr1grs")
     DID_VOICE_ID: str = os.getenv("DID_VOICE_ID", "en-US-JennyNeural")
     
-    # News Scraping Configuration
+    # News Scraping Configuration - Extended list for better reliability
     NEWS_SOURCES: list = [
+        # Major International News
         "https://www.bbc.com/news",
-        "https://www.reuters.com",
         "https://apnews.com",
+        "https://www.aljazeera.com",
+        "https://www.dw.com/en",
+        "https://www.france24.com/en",
+        
+        # US News
         "https://www.npr.org/sections/news",
-        "https://www.theguardian.com/world"
+        "https://abcnews.go.com",
+        "https://www.cbsnews.com",
+        "https://www.nbcnews.com",
+        "https://www.usatoday.com",
+        "https://thehill.com",
+        
+        # UK News
+        "https://www.theguardian.com/international",
+        "https://www.independent.co.uk",
+        "https://www.telegraph.co.uk",
+        "https://www.standard.co.uk",
+        
+        # Business & Tech News
+        "https://www.cnbc.com",
+        "https://www.bloomberg.com",
+        "https://techcrunch.com",
+        "https://www.wired.com",
+        "https://arstechnica.com",
+        
+        # Science & Health
+        "https://www.scientificamerican.com",
+        "https://www.newscientist.com",
+        "https://medicalxpress.com",
+        
+        # Alternative sources (if above fail)
+        "https://www.axios.com",
+        "https://www.politico.com",
+        "https://time.com",
+        "https://www.newsweek.com",
+        "https://www.economist.com",
+        "https://www.forbes.com"
     ]
     
     # User Agent for web scraping

@@ -21,33 +21,90 @@ class ScriptGenerator:
     def generate_script(self, articles: List[Dict]) -> str:
         """
         Generate a complete news anchor script from article summaries
+        OPTIMIZED FOR D-ID FREE TIER (short, concise script)
         
         Args:
             articles: List of article dictionaries with 'title' and 'summary'
             
         Returns:
-            Complete news script (30-45 seconds speaking length)
+            Complete news script (30-45 seconds = ~75-110 words for free tier)
         """
         try:
             logger.info(f"Generating script from {len(articles)} articles")
             
-            # Build script components
-            opening = self._create_opening()
-            headlines = self._create_headlines(articles)
-            closing = self._create_closing()
+            # Build script components - SHORTENED for free tier
+            opening = self._create_opening_short()
+            headlines = self._create_headlines_short(articles)
+            closing = self._create_closing_short()
             
             # Combine into full script
-            script = f"{opening}\n\n{headlines}\n\n{closing}"
+            script = f"{opening} {headlines} {closing}"
             
             # Log script details
             word_count = len(script.split())
-            logger.info(f"Generated script: {word_count} words, ~{word_count / 2.5:.0f} seconds")
+            estimated_seconds = word_count / 2.5  # Average speaking rate
+            
+            logger.info(f"Generated script: {word_count} words, ~{estimated_seconds:.0f} seconds")
+            
+            # Warn if too long for free tier
+            if estimated_seconds > 180:  # 3 minutes max for free tier
+                logger.warning(f"Script may be too long for D-ID free tier ({estimated_seconds:.0f}s > 180s)")
             
             return script
             
         except Exception as e:
             logger.error(f"Error generating script: {str(e)}")
             raise ValueError(f"Failed to generate script: {str(e)}")
+    
+    def _create_opening_short(self) -> str:
+        """
+        Create SHORT opening line for news broadcast (free tier optimized)
+        
+        Returns:
+            Opening sentence
+        """
+        current_date = datetime.utcnow().strftime("%B %d, %Y")
+        return f"Here are today's top stories for {current_date}."
+    
+    def _create_headlines_short(self, articles: List[Dict]) -> str:
+        """
+        Create CONCISE headlines section from articles (free tier optimized)
+        
+        Args:
+            articles: List of article dictionaries
+            
+        Returns:
+            Formatted headlines text (shortened summaries)
+        """
+        headlines = []
+        
+        for idx, article in enumerate(articles, 1):
+            summary = article.get('summary', '')
+            
+            # Shorten each summary to first 2 sentences only
+            sentences = summary.split('.')
+            short_summary = '. '.join(sentences[:2]).strip()
+            if short_summary and not short_summary.endswith('.'):
+                short_summary += '.'
+            
+            # Simple transitions for brevity
+            if idx == 1:
+                headline = short_summary
+            else:
+                headline = short_summary
+            
+            headlines.append(headline)
+        
+        return " ".join(headlines)
+    
+    def _create_closing_short(self) -> str:
+        """
+        Create SHORT closing line for news broadcast (free tier optimized)
+        
+        Returns:
+            Closing sentence
+        """
+        return "That's your news update."
     
     def _create_opening(self) -> str:
         """

@@ -27,13 +27,14 @@ class NewsSummarizer:
     def summarize_article(self, title: str, content: str) -> str:
         """
         Generate a concise summary of a news article
+        OPTIMIZED FOR D-ID FREE TIER - Creates 2 sentence summaries
         
         Args:
             title: Article title
             content: Full article text
             
         Returns:
-            3-4 sentence summary in neutral, factual tone
+            2 sentence summary in neutral, factual tone
         """
         try:
             logger.info(f"Summarizing article: {title[:60]}...")
@@ -48,10 +49,10 @@ class NewsSummarizer:
                     {
                         "role": "system",
                         "content": (
-                            "You are a professional news editor. Create concise, "
-                            "factual summaries of news articles. Keep summaries "
-                            "to 3-4 sentences. Use neutral, objective tone. "
-                            "Focus on key facts and main points."
+                            "You are a professional news editor. Create ultra-concise "
+                            "summaries of news articles in EXACTLY 2 sentences. "
+                            "Use neutral, objective tone. Focus on the most important fact only. "
+                            "Each sentence should be under 20 words. Be brief and direct."
                         )
                     },
                     {
@@ -60,7 +61,7 @@ class NewsSummarizer:
                     }
                 ],
                 temperature=0.3,  # Low temperature for factual consistency
-                max_tokens=150
+                max_tokens=80  # Reduced from 150 for shorter summaries
             )
             
             # Extract summary from response
@@ -84,6 +85,7 @@ class NewsSummarizer:
     def _create_summary_prompt(self, title: str, content: str) -> str:
         """
         Create the prompt for article summarization
+        OPTIMIZED FOR FREE TIER - Asks for very short summaries
         
         Args:
             title: Article title
@@ -93,7 +95,7 @@ class NewsSummarizer:
             Formatted prompt string
         """
         # Truncate content if too long (to avoid token limits)
-        max_content_length = 3000
+        max_content_length = 2000  # Reduced from 3000
         if len(content) > max_content_length:
             content = content[:max_content_length] + "..."
         
@@ -103,13 +105,9 @@ Title: {title}
 Article Content:
 {content}
 
-Task: Provide a concise summary of this news article in 3-4 sentences. 
-Focus on:
-- Main facts and key points
-- Who, what, when, where, why
-- Important outcomes or implications
-
-Use neutral, factual language appropriate for a news broadcast.
+Task: Provide a summary in EXACTLY 2 short sentences (under 20 words each).
+Focus only on the single most important fact.
+Use simple, clear language suitable for a brief news update.
 """
         return prompt
     

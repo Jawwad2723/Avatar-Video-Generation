@@ -66,6 +66,7 @@ class AvatarVideoGenerator:
     def _create_talk(self, script: str) -> str:
         """
         Create a new talk (video generation) via D-ID API
+        FREE TIER COMPATIBLE VERSION
         
         Args:
             script: Script text for avatar to speak
@@ -76,6 +77,8 @@ class AvatarVideoGenerator:
         try:
             endpoint = f"{self.base_url}/talks"
             
+            # Simplified payload for FREE TIER compatibility
+            # Free tier has limitations on script length and features
             payload = {
                 "script": {
                     "type": "text",
@@ -85,15 +88,11 @@ class AvatarVideoGenerator:
                         "voice_id": self.voice_id
                     }
                 },
-                "config": {
-                    "fluent": True,
-                    "pad_audio": 0.0,
-                    "stitch": True
-                },
-                "source_url": f"https://create-images-results.d-id.com/DefaultPresenters/{self.presenter_id}/image.jpeg"
+                "source_url": f"https://d-id-public-bucket.s3.amazonaws.com/alice.jpg"
             }
             
-            logger.info(f"Creating talk with D-ID API")
+            logger.info(f"Creating talk with D-ID API (Free Tier)")
+            logger.info(f"Script length: {len(script)} characters")
             
             response = requests.post(
                 endpoint,
@@ -102,8 +101,21 @@ class AvatarVideoGenerator:
                 timeout=30
             )
             
+            # Log response for debugging
+            logger.info(f"D-ID Response Status: {response.status_code}")
+            
             if response.status_code == 401:
                 raise ValueError("D-ID authentication failed. Check API key.")
+            
+            if response.status_code == 400:
+                # Try to get error details
+                try:
+                    error_data = response.json()
+                    error_msg = error_data.get('description', error_data.get('error', 'Unknown error'))
+                    logger.error(f"D-ID 400 Error Details: {error_msg}")
+                    raise ValueError(f"D-ID API error: {error_msg}")
+                except:
+                    pass
             
             response.raise_for_status()
             
@@ -118,6 +130,13 @@ class AvatarVideoGenerator:
             
         except requests.exceptions.RequestException as e:
             logger.error(f"D-ID API request failed: {str(e)}")
+            # Try to extract more details from response
+            if hasattr(e, 'response') and e.response is not None:
+                try:
+                    error_details = e.response.json()
+                    logger.error(f"D-ID Error Details: {error_details}")
+                except:
+                    logger.error(f"D-ID Response Text: {e.response.text}")
             raise ValueError(f"D-ID API error: {str(e)}")
     
     def _wait_for_video(self, talk_id: str, max_wait_seconds: int = 300) -> str:
