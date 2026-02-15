@@ -41,9 +41,6 @@ Avatar-Video-Generation/
 │   ├── styles.css              # Modern styling
 │   └── script.js               # Frontend logic & real-time updates
 │
-├── docs/
-│   └── code_explanation.md     # Detailed code documentation
-│
 ├── .env                        # Environment variables (Git-ignored)
 ├── .env.example                # Example configuration template
 ├── requirements.txt            # Python dependencies
@@ -88,8 +85,6 @@ Avatar-Video-Generation/
    ```env
    OPENAI_API_KEY=your_openai_key_here
    DID_API_KEY=your_did_api_key_here
-   DID_PRESENTER_ID=amy-jcwCkr1grs  # Default avatar
-   DID_VOICE_ID=en-US-JennyNeural   # Default voice
    ```
 
 5. **Run the application**
@@ -173,8 +168,6 @@ OPENAI_MODEL=gpt-4o-mini                 # Model for summarization
 
 # D-ID Configuration (Avatar)
 DID_API_KEY=<your-api-key>               # Your D-ID API key
-DID_PRESENTER_ID=amy-jcwCkr1grs         # Avatar character ID
-DID_VOICE_ID=en-US-JennyNeural          # Voice synthesis model
 
 # Optional Settings
 DEBUG=false                               # Enable debug logging
@@ -540,6 +533,12 @@ For issues or questions:
 3. Check log files for detailed error messages
 4. Verify all API keys are correctly configured
 
+## 🔒 Repository Access
+
+Private Repo(README.md only): https://github.com/Jawwad2723/Avatar-Video-Generation
+Private Repo(Entire Code): https://github.com/Jawwad2723/Avatar-Video-Generation-Original 
+Please reach me out on jawwadhassan76@gmail.com if you want access of private repo.
+
 ---
 
 **Happy Generating! 🎬**
@@ -548,8 +547,6 @@ For issues or questions:
 - [FastAPI Documentation](https://fastapi.tiangolo.com/)
 - [OpenAI API Reference](https://platform.openai.com/docs/api-reference)
 - [D-ID API Documentation](https://docs.d-id.com/)
-- [BeautifulSoup Documentation](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
-
 ---
 
 **Built with ❤️ using FastAPI, OpenAI, and D-ID**
